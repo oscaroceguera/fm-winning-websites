@@ -23,7 +23,7 @@ export function TitleSection() {
         ease: "circ.inOut",
       });
     },
-    { scope: containerRef }
+    { scope: containerRef },
   );
   return (
     <div

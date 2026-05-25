@@ -3,14 +3,92 @@
 import { useGSAP } from "@gsap/react";
 import { useRef } from "react";
 
-import { SplitText } from "gsap/all";
+import { SplitText, GSDevTools } from "gsap/all";
 import gsap from "gsap";
+
 gsap.registerPlugin(SplitText);
+gsap.registerPlugin(GSDevTools);
 
 export default function Page() {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(() => {}, { scope: containerRef });
+  useGSAP(
+    () => {
+      SplitText.create(".title", {
+        type: "words, chars",
+        wordsClass: "word++", // increment the index
+        charsClass: "char",
+        mask: "chars",
+      });
+
+      const tl = gsap.timeline();
+
+      // debugg
+      GSDevTools.create({
+        animation: tl,
+      });
+
+      tl.from(".title .word1 .char", {
+        y: "100%",
+        duration: 0.5,
+        stagger: 0.07,
+        ease: "circ.out",
+      });
+
+      tl.from(
+        ".title .word2 .char",
+        {
+          x: "-100%",
+          duration: 0.2,
+          stagger: 0.07,
+          ease: "circ.out",
+          // delay: 0.9,
+        },
+        "-=0.5s",
+      );
+
+      tl.from(
+        ".tl-dot",
+        {
+          opacity: 0,
+          duration: 0.01,
+          repeat: 10,
+          repeatDelay: 0.05,
+          yoyo: true,
+        },
+        "<",
+      );
+
+      tl.from(
+        ".tl-start",
+        {
+          height: 0,
+        },
+        "<",
+      );
+
+      tl.from(
+        ".tl-main",
+        {
+          width: 0,
+        },
+        "<+0.2",
+      );
+
+      tl.from(
+        ".title .word3 .char",
+        {
+          y: "-100%",
+          duration: 0.3,
+          stagger: 0.07,
+          ease: "circ.out",
+          // delay: 0.9,
+        },
+        "-=0.5s",
+      );
+    },
+    { scope: containerRef },
+  );
 
   return (
     <div

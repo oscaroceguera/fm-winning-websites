@@ -1,11 +1,42 @@
+import s from "./style.module.css";
+
+const text = [
+  "CSS".split(""), // ["C", "S", "S"]
+  "version".split(""),
+];
+
 export default function Page() {
   return (
     <div className="bg-blue-300 text-black">
       <div className="flex h-screen items-end justify-left overflow-hidden">
         <h1 className="title font-black text-[min(20rem,30vw)] leading-none pb-[0.1em] text-left">
-          CSS
+          {text[0].map((letter, idx) => (
+            <span
+              key={idx}
+              className={s.letter}
+              style={
+                {
+                  "--index": idx,
+                } as React.CSSProperties
+              }
+            >
+              {letter}
+            </span>
+          ))}
           <br />
-          version
+          {text[1].map((letter, idx) => (
+            <span
+              key={idx}
+              className={s.letter}
+              style={
+                {
+                  "--index": idx,
+                } as React.CSSProperties
+              }
+            >
+              {letter}
+            </span>
+          ))}
         </h1>
       </div>
     </div>
